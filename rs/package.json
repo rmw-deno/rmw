@@ -23,7 +23,7 @@
     "terser": "^5.6.1"
   },
   "scripts": {
-    "prepare": "rm -rf lib && rsync -av --include='*/' --include='*.txt' --include='*.js' --include='*.mjs' --exclude=* src/ lib/ && npx coffee -m --compile --output lib src/"
+    "prepare": "rm -rf lib && rsync -qav --include='*/' --include='*.txt' --include='*.js' --include='*.mjs' --exclude=* src/ lib/ && npx coffee -m --compile --output lib src/"
   },
   "type": "module"
 }
