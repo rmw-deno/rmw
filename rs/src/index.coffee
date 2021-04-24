@@ -19,29 +19,36 @@ Udp = =>
 
 do =>
   console.log await getNetworkAddr()
-  console.log uuid.generate()
+  #console.log uuid.generate()
 
-  udp1 = Udp()
-  setTimeout(
-    =>
-      loop
-        [data, remote] = await udp1.receive(
-          new Uint8Array(1400)
-        )
+
+  udp = Udp()
+
+  decoder = new TextDecoder()
+  decode = decoder.decode.bind(decoder)
+  udp.receive(new Uint8Array(1472)).then(
+    ([msg,remote])=>
+      console.log remote
+      console.log decode msg
+    (err)=>
+      console.log err
   )
 
-  n = 0
-  msg = []
   {encode} = new TextEncoder()
-  while ++n<2048
-    udp2 = Udp()
-    msg.push n%10
-    udp2.send(
-      encode msg.join ''
-      {
-        hostname: "127.0.0.1"
-        port:udp1.addr.port
-        transport:"udp"
-      }
-    )
-  console.log "done"
+
+  buf = encode """M-SEARCH * HTTP/1.1
+HOST:239.255.255.250:1900
+MAN:"ssdp:discover"
+MX:3
+ST:urn:schemas-upnp-org:device:InternetGatewayDevice:1""".replace(/\n/g, "\r\n")
+
+  console.log new TextDecoder().decode(buf)
+  console.log await udp.send(
+    buf
+    {
+      hostname:"239.255.255.250"
+      port:1900
+      transport:"udp"
+    }
+  )
+  await new Promise(=>)

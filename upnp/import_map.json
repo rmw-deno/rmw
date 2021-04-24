@@ -1,8 +1,0 @@
-{
-  "imports": {
-    "testing/": "https://deno.land/std/testing/"
-  },
-  "hash": {
-    "testing/": "0f8316a55f8d695bb70fc10ac93813086ab5239cb2da3f9cbbbaed2da8b3c0d2"
-  }
-}
