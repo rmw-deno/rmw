@@ -1,0 +1,13 @@
+{
+  "name": "blake3",
+  "collaborators": [
+    "i@rmw.link"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "blake3_bg.wasm",
+    "blake3.js",
+    "blake3_bg.js"
+  ],
+  "main": "blake3.js"
+}
