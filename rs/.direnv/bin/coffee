@@ -1,9 +1,22 @@
 #!/usr/bin/env sh
 
-_DIR=$(dirname $(realpath "$0"))
+#_DIR=$(dirname $(realpath "$0"))
+#
+#filepath=$(realpath $1)
+#
+#cd $(dirname $filepath)
+#
+#exec node  --trace-warnings --es-module-specifier-resolution=node --trace-uncaught --expose-gc --experimental-loader "file://$_DIR/coffee.mjs" --unhandled-rejections=strict $filepath $@
+
+_DIR=$(dirname $(realpath $0))
+_ROOT=$_DIR/../..
+
 
 filepath=$(realpath $1)
+name=$(basename $1 .coffee)
 
-cd $(dirname $filepath)
+jsdir=$(node -e "path=require('path');console.log(path.dirname(process.argv[1].replace('/src/','/lib/')))" -- $filepath)
 
-exec node  --trace-warnings --es-module-specifier-resolution=node --trace-uncaught --expose-gc --experimental-loader "file://$_DIR/coffee.mjs" --unhandled-rejections=strict $filepath $@
+cd $jsdir
+deno run -A --unstable --import-map=$_ROOT/import.map.json "$name.js" 
+

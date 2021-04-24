@@ -20,10 +20,10 @@
     "klaw": "^3.0.0",
     "nodemon": "^2.0.7",
     "source-map-support": "^0.5.19",
-    "terser": "^5.6.0-beta"
+    "terser": "^5.6.1"
   },
   "scripts": {
-    "prepare": "rsync -avq --include='*/' --include='*.js' --include='*.mjs' --exclude=* src/ lib/ && coffee .direnv/bin/coffee.coffee --output lib src/"
+    "prepare": "rm -rf lib && rsync -av --include='*/' --include='*.txt' --include='*.js' --include='*.mjs' --exclude=* src/ lib/ && npx coffee -m --compile --output lib src/"
   },
   "type": "module"
 }

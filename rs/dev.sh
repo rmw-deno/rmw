@@ -6,7 +6,7 @@ cd $DIR
 . .direnv/bin/pid.sh
 
 if [ ! -n "$1" ] ;then
-exe=lib/index.js
+exe=src/index.coffee
 else
 exe=${@:1}
 fi

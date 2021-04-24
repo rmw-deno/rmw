@@ -1,7 +1,6 @@
 #!/usr/bin/env coffee
 
 import { getMachineId } from 'https://deno.land/x/machine_id/mod.ts'
-import { encode } from "https://deno.land/std@0.86.0/encoding/utf8.ts"
 import config from '../config/yml'
 # import SEED from '../config/seed'
 
