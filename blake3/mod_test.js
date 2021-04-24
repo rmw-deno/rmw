@@ -19,9 +19,10 @@ Deno.test(
         ["hi", "hQUumqsbZ7ZiLZSghEGwn9W3rKYe42BBbXDeXaZ9hso="],
         ["您好", "sV7GDRr304JM+9IRjTkcYVBZAJ6EotxATG+nn636jCE="]
       ]) {
-      var buf = hash(encode(i));
+      var h = b64Encode(hash(encode(i)));
+      console.log(i, h);
       assertEquals(
-        b64Encode(buf),
+        h,
         right
       );
     }
