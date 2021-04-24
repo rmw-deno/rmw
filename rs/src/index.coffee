@@ -26,7 +26,15 @@ do =>
   udp.receive(new Uint8Array(1472)).then(
     ([msg,remote])=>
       console.log remote
-      console.log utf8Decode msg
+      msg = utf8Decode msg
+      msg = msg.replace(/\r/g,'').split("\n")
+      for i from msg
+        if i.startsWith("LOCATION:")
+          url = i.slice(9).trim()
+          break
+      if url
+        console.log await (await fetch(url)).text()
+
     (err)=>
       console.log err
   )
