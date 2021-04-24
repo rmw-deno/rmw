@@ -20,7 +20,7 @@ Deno.test(
         ["您好", "sV7GDRr304JM+9IRjTkcYVBZAJ6EotxATG+nn636jCE="]
       ]) {
       var h = b64Encode(hash(encode(i)));
-      console.log(i, h);
+      console.log("\n" + JSON.stringify(i), h);
       assertEquals(
         h,
         right
