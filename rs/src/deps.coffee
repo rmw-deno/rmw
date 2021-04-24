@@ -1,2 +1,2 @@
-export { v4 as uuid } from "https://deno.land/std@0.95.0/uuid/mod.ts"
+export { encode as utf8Encode, decode as utf8Decode } from 'https://deno.land/x/utf8/mod.js';
 
