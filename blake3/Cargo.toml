@@ -1,0 +1,12 @@
+[package]
+name = "blake3"
+version = "0.1.0"
+edition="2018"
+authors = ["i@rmw.link"]
+
+[lib]
+crate-type =["cdylib"]
+
+[dependencies]
+blake3 = "0.3.7"
+wasm-bindgen = "=0.2.61"
