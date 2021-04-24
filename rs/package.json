@@ -1,0 +1,29 @@
+{
+  "name": "@rmw/srv",
+  "version": "0.0.0",
+  "repository": "https://github.com/rmw-lib/srv",
+  "author": "i@rmw.link",
+  "license": "MulanPSL-2.0",
+  "exports": {
+    ".": "./lib/index.js",
+    "./*": "./lib/*"
+  },
+  "files": [
+    "/lib"
+  ],
+  "dependencies": {
+    "@rmw/console": "^0.0.15"
+  },
+  "devDependencies": {
+    "@rmw/md-include": "^0.4.5",
+    "coffeescript": "^2.5.1",
+    "klaw": "^3.0.0",
+    "nodemon": "^2.0.7",
+    "source-map-support": "^0.5.19",
+    "terser": "^5.6.0-beta"
+  },
+  "scripts": {
+    "prepare": "rsync -avq --include='*/' --include='*.js' --include='*.mjs' --exclude=* src/ lib/ && coffee .direnv/bin/coffee.coffee --output lib src/"
+  },
+  "type": "module"
+}
