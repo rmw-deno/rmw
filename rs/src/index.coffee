@@ -28,6 +28,7 @@ _control_url = (url)=>
     x = Xml x
     for j from ['serviceId','serviceType','controlURL']
       console.log j,":",x.one(j)
+    console.log ""
 
 
 do =>
