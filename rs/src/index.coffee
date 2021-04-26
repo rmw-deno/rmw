@@ -33,6 +33,7 @@ do =>
           url = i.slice(9).trim()
           break
       if url
+        console.log url
         console.log await (await fetch(url)).text()
 
     (err)=>
