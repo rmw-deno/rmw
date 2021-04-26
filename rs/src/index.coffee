@@ -1,6 +1,6 @@
 #!/usr/bin/env coffee
 
-import {extractXml,utf8Decode,utf8Encode} from './deps.js'
+import {Xml,utf8Decode,utf8Encode} from './deps.js'
 
 M_SEARCH = utf8Encode """M-SEARCH * HTTP/1.1
 HOST:239.255.255.250:1900
@@ -22,10 +22,13 @@ Udp = =>
 
 
 _control_url = (url)=>
-  xml = await (await fetch(url)).text()
-  URLBase = extractXml.one(xml, 'URLBase')
-  for i from extractXml.li(xml, 'service')
-    console.log i
+  xml = Xml await (await fetch(url)).text()
+  URLBase = xml.one('URLBase')
+  for x from xml.li('service')
+    x = Xml x
+    for j from ['serviceId','serviceType','controlURL']
+      console.log j,":",x.one(j)
+
 
 do =>
   udp = Udp()
@@ -46,7 +49,7 @@ do =>
   )
 
 
-  console.log await udp.send(
+  await udp.send(
     M_SEARCH
     {
       hostname:"239.255.255.250"
