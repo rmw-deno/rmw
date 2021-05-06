@@ -1,5 +1,7 @@
 #!/usr/bin/env coffee
 
+# 参考资料: [UPNP自动端口映射的实现](https://blog.csdn.net/zfrong/article/details/3305738)
+
 import {Xml,utf8Decode,utf8Encode} from './deps.js'
 
 M_SEARCH = utf8Encode """M-SEARCH * HTTP/1.1
@@ -23,12 +25,44 @@ Udp = =>
 
 _control_url = (url)=>
   xml = Xml await (await fetch(url)).text()
+  #console.log xml.$
+
   URLBase = xml.one('URLBase')
+  if not URLBase
+    URLBase = new URL(url).origin
+
   for x from xml.li('service')
     x = Xml x
-    for j from ['serviceId','serviceType','controlURL']
-      console.log j,":",x.one(j)
-    console.log ""
+
+    serviceType = x.one('serviceType')
+    #r = x.dict ['serviceId','serviceType','controlURL']
+    if [
+      "urn:schemas-upnp-org:service:WANIPConnection:1"
+      "urn:schemas-upnp-org:service:WANPPPConnection:1"
+    ].indexOf(serviceType) + 1
+      controlURL = URLBase+x.one('controlURL')
+      break
+  if controlURL
+    console.log controlURL,"!"
+
+    r = await fetch(
+      controlURL
+      {
+        method:'POST'
+        headers:
+          "Content-Type": "text/xml"
+          "SOAPAction":"#{serviceType}#GetGenericPortMappingEntry"
+        body:"""<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:GetGenericPortMappingEntry xmlns:u="#{serviceType}">
+<NewPortMappingIndex>0</NewPortMappingIndex>
+</u:GetGenericPortMappingEntry>
+</s:Body>
+</s:Envelope>"""
+      }
+    )
+    console.log await r.text()
 
 
 do =>
