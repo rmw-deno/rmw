@@ -11,6 +11,8 @@ MX:3
 ST:urn:schemas-upnp-org:device:InternetGatewayDevice:1""".replace(/\n/g, "\r\n")
 
 Udp = =>
+
+
   udp = Deno.listenDatagram {
     port: 0
     transport: "udp"
@@ -26,15 +28,23 @@ Udp = =>
 fetch_xml = (url, options={})=>
   Xml await (await fetch(url, options)).text()
 
+local_ip = (hostname, port)=>
+  socket = await Deno.connect({
+    port
+    hostname
+  })
+  socket.close()
+  return socket.localAddr.hostname
 
 
 _control_url = (url)=>
   xml = await fetch_xml url
+  url = new URL(url)
   #console.log xml.$
 
   URLBase = xml.one('URLBase')
   if not URLBase
-    URLBase = new URL(url).origin
+    URLBase = url.origin
 
   for x from xml.li('service')
     x = Xml x
@@ -49,7 +59,11 @@ _control_url = (url)=>
       break
 
   if controlURL
-    console.log controlURL,"!"
+    ip = await local_ip(
+      url.hostname
+      parseInt(url.port or 80)
+    )
+    console.log ip
 
     action = "GetGenericPortMappingEntry"
     r = await fetch_xml(
