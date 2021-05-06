@@ -28,7 +28,7 @@ Udp = =>
 fetch_xml = (url, options={})=>
   Xml await (await fetch(url, options)).text()
 
-local_ip = (hostname, port)=>
+export local_ip = (hostname, port)=>
   # https://github.com/denoland/deno/issues/10519
   # Deno.connect not support transport:"udp"
   socket = await Deno.connect({
