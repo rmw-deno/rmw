@@ -23,8 +23,13 @@ Udp = =>
   udp
 
 
+fetch_xml = (url, options={})=>
+  Xml await (await fetch(url, options)).text()
+
+
+
 _control_url = (url)=>
-  xml = Xml await (await fetch(url)).text()
+  xml = await fetch_xml url
   #console.log xml.$
 
   URLBase = xml.one('URLBase')
@@ -42,27 +47,23 @@ _control_url = (url)=>
     ].indexOf(serviceType) + 1
       controlURL = URLBase+x.one('controlURL')
       break
+
   if controlURL
     console.log controlURL,"!"
 
-    r = await fetch(
+    action = "GetGenericPortMappingEntry"
+    r = await fetch_xml(
       controlURL
       {
         method:'POST'
         headers:
           "Content-Type": "text/xml"
-          "SOAPAction":"#{serviceType}#GetGenericPortMappingEntry"
+          "SOAPAction":"#{serviceType}##{action}"
         body:"""<?xml version="1.0"?>
-<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
-<s:Body>
-<u:GetGenericPortMappingEntry xmlns:u="#{serviceType}">
-<NewPortMappingIndex>0</NewPortMappingIndex>
-</u:GetGenericPortMappingEntry>
-</s:Body>
-</s:Envelope>"""
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:#{action} xmlns:u="#{serviceType}"><NewPortMappingIndex>0</NewPortMappingIndex></u:#{action}></s:Body></s:Envelope>"""
       }
     )
-    console.log await r.text()
+    console.log r.one('u:GetGenericPortMappingEntryResponse')
 
 
 do =>
