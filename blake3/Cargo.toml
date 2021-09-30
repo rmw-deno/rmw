@@ -8,5 +8,5 @@ authors = ["i@rmw.link"]
 crate-type =["cdylib"]
 
 [dependencies]
-blake3 = "0.3.7"
-wasm-bindgen = "=0.2.61"
+blake3 = "1.0.0"
+wasm-bindgen = "0.2.76"
