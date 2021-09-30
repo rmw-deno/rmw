@@ -18,5 +18,5 @@ name=$(basename $1 .coffee)
 jsdir=$(node -e "path=require('path');console.log(path.dirname(process.argv[1].replace('/src/','/lib/')))" -- $filepath)
 
 cd $jsdir
-deno run -A --unstable --import-map=$_ROOT/.import.map.json "$name.js" 
+deno run -A --location https://rmw.link --unstable --import-map=$_ROOT/.import.map.json "$name.js" 
 

@@ -2,6 +2,7 @@
 
 # 参考资料: [UPNP自动端口映射的实现](https://blog.csdn.net/zfrong/article/details/3305738)
 
+console.log(location.href)
 
 import {encode} from 'utf8'
 import __dirname from '~/__dirname.js'
