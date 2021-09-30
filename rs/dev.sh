@@ -11,7 +11,6 @@ else
 exe=${@:1}
 fi
 
-rm -rf src/__dirname.coffee
-ln -s __dirname.js.coffee src/__dirname.coffee
+rsync -av os/js/* src
 
 exec npx nodemon --watch 'test/**/*' --watch 'src/**/*' -e coffee,js,mjs,json,wasm,txt,yaml --exec ".direnv/bin/dev.sh $exe"
