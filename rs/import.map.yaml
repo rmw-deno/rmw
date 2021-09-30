@@ -1,0 +1,5 @@
+imports:
+  ~/: ./lib/
+  std/: https://deno.land/std@0.109.0/
+  utf8: https://deno.land/x/utf8/mod.js
+

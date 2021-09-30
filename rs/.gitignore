@@ -9,6 +9,7 @@
 node_modules/
 package-lock.json
 
+.import.map.json
 src/__dirname.coffee
 rmw-srv
 /rmw-srv.js

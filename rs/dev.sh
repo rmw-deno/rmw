@@ -13,4 +13,6 @@ fi
 
 rsync -av os/js/* src
 
+yaml2json import.map.yaml > .import.map.json
+
 exec npx nodemon --watch 'test/**/*' --watch 'src/**/*' -e coffee,js,mjs,json,wasm,txt,yaml --exec ".direnv/bin/dev.sh $exe"
