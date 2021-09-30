@@ -2,6 +2,10 @@
 
 # 参考资料: [UPNP自动端口映射的实现](https://blog.csdn.net/zfrong/article/details/3305738)
 
+console.log Deno.mainModule
+console.log Deno.execPath()
+console.log import.meta
+
 import {Xml,utf8Decode,utf8Encode} from './deps.js'
 
 M_SEARCH = utf8Encode """M-SEARCH * HTTP/1.1
