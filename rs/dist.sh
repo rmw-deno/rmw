@@ -2,6 +2,8 @@
 
 _DIR=$(cd "$(dirname "$0")"; pwd)
 cd $_DIR
+rm -rf src/__dirname.coffee
+ln -s __dirname.exe.coffee src/__dirname.coffee
 npm run prepare
 deno bundle --unstable --import-map=import.map.json ./lib/index.js > ./lib/rmw-srv.js
 deno compile -A --unstable lib/rmw-srv.js

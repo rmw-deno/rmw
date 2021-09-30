@@ -3,9 +3,13 @@
 *.log
 *.out
 *.pid
-/rmw-srv.js
-/rmw-srv.js.map
 /data/
 /lib/
+
 node_modules/
 package-lock.json
+
+src/__dirname.coffee
+rmw-srv
+/rmw-srv.js
+/rmw-srv.js.map

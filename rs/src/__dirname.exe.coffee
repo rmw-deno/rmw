@@ -2,4 +2,4 @@
 
 import { dirname } from "std/path/mod.ts"
 
-export default dirname(dirname(new URL(import.meta.url).pathname))
+export default dirname(Deno.execPath())
